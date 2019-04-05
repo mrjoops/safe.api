@@ -81,18 +81,18 @@ class PasswordGenerator {
 
             for ($a = 0; $a < $length; $a++) {
                 if ($switch) {
-                    $word[] = $tabVowels[rand(0, count($tabVowels) - 1)];
+                    $word[] = $this->pickRandomChar($tabVowels);
                     // Cette manipulation permet de faire passer $switch de true à false...
                     $switch = false;
                 } else {
-                    $word[] = $tabConsonants[rand(0, count($tabConsonants) - 1)];
+                    $word[] = $this->pickRandomChar($tabConsonants);
                     // ...et vice-versa
                     $switch = true;
                 }
             }
 
             // On décide d'ajouter à chaque mot un caractère numérique et un caractère spécial
-            $realWord = implode('', $word) . $this->filler(1, $tabNum)[0] . $this->filler(1, $tabSpe)[0];
+            $realWord = implode('', $word) . $this->pickRandomChar($tabNum) . $this->pickRandomChar($tabSpe);
             $password = $password . $realWord;
         }
 
@@ -108,10 +108,18 @@ class PasswordGenerator {
         $result = [];
 
         for ($i = 0; $i < $nb; $i++) {
-            $result[] = $chars[rand(0, count($chars) - 1)];
+            $result[] = $this->pickRandomChar($chars);
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $chars Les caractères possibles
+     * @return string Un caractère tiré au hazard
+     */
+    private function pickRandomChar(array $chars): string {
+        return strval($chars[rand(0, count($chars) - 1)]);
     }
 
 }
