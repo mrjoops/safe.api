@@ -70,8 +70,6 @@ class PasswordGenerator {
         $tabConsonants = ['z', 'r', 't', 'p', 'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'w', 'x', 'c', 'v', 'b', 'n'];
         $tabNum = range(0, 9);
         $tabSpe = ['&', '-', '@', '_', '+', ':'];
-        // On fera passer cette variable alternativement de true à false
-        $switch = true;
         $password = '';
 
         for ($i = 0; $i < $nbWord; $i++) {
@@ -80,9 +78,7 @@ class PasswordGenerator {
             $word = [];
 
             for ($a = 0; $a < $length; $a++) {
-                $word[] = $this->pickRandomChar($switch ? $tabVowels : $tabConsonants);
-                // Cette manipulation permet de faire passer $switch de true à false et vice-versa
-                $switch = !$switch;
+                $word[] = $this->pickRandomChar($a % 2 === 0 ? $tabVowels : $tabConsonants);
             }
 
             // On décide d'ajouter à chaque mot un caractère numérique et un caractère spécial
