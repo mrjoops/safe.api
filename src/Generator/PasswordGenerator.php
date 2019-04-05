@@ -22,33 +22,42 @@ class PasswordGenerator {
         // On crée un tableau contenant les caractères possibles
         $tabNum = range(0, 9);
 
-        for ($i = 0; $i < $nbNum; $i++) {
-            // On tire un caractère au hazard dans le tableau
-            $password[] = $tabNum[rand(0, count($tabNum) - 1)];
-        }
+        // On remplace la boucle "for" par l'appel à la méthode "filler"
+        $password = array_merge($password, $this->filler($nbNum, $tabNum));
 
         // On s'occupe ensuite des caractères spéciaux
         // Même méthode que précédemment
         $nbSpe = intval($nbChar * $specials);
         $tabSpe = ['&', '-', '@', '_', '+', ':'];
 
-        for ($i = 0; $i < $nbSpe; $i++) {
-            $password[] = $tabSpe[rand(0, count($tabSpe) - 1)];
-        }
+        $password = array_merge($password, $this->filler($nbSpe, $tabSpe));
 
         // On s'occupe enfin des caractères alphabétiques
         $nbAlpha = $nbChar - $nbSpe - $nbNum;
         $tabAlpha = range('a', 'z') + range('A', 'Z');
 
-        for ($i = 0; $i < $nbAlpha; $i++) {
-            $password[] = $tabAlpha[rand(0, count($tabAlpha) - 1)];
-        }
+        $password = array_merge($password, $this->filler($nbAlpha, $tabAlpha));
 
         // On mélange le tableau
         shuffle($password);
 
         // On concatène tous les caractères du tableau pour obtenir une chaîne
         return implode('', $password);
+    }
+
+    /**
+     * @param int $nb Le nombre de caractères à tirer au hazard
+     * @param array $chars Les caractères possibles
+     * @return array Un tableau de caractères tirés au hazard
+     */
+    private function filler(int $nb, array $chars): array {
+        $result = [];
+
+        for ($i = 0; $i < $nb; $i++) {
+            $result[] = $chars[rand(0, count($chars) - 1)];
+        }
+
+        return $result;
     }
 
 }
