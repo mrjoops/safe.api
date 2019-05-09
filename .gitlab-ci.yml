@@ -1,6 +1,30 @@
 image: mrjoops/simplon-cpro6-php
 
-check:
-  script:
-  - make check
+stages:
+  - build
+  - test
+
+cs:
+  script: make cs
+  stage: test
+
+md:
+  script: make md
+  stage: test
+
+sec:
+  script: make security
+  stage: test
+
+stan:
+  script: make stan
+  stage: test
+
+vendor:
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-composer
+    paths:
+      - ${HOME}/.composer/cache/files
+  script: make vendor
+  stage: build
 
