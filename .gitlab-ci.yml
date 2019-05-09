@@ -1,0 +1,6 @@
+image: mrjoops/simplon-cpro6-php
+
+check:
+  script:
+  - make check
+
