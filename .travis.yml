@@ -1,2 +1,10 @@
+before_script:
+  - phpenv config-rm xdebug.ini
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+env:
+  global:
+    - MAKEFLAGS="-j 2"
 language: php
 script: make check
