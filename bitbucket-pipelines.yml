@@ -1,0 +1,10 @@
+image: mrjoops/simplon-cpro6-php
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - composer
+        script:
+          - make check
+
