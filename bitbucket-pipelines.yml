@@ -2,9 +2,29 @@ image: mrjoops/simplon-cpro6-php
 
 pipelines:
   default:
-    - step:
-        caches:
-          - composer
-        script:
-          - make check
+    - parallel:
+        - step:
+            caches:
+              - composer
+            name: Code style
+            script:
+              - make cs
+        - step:
+            caches:
+              - composer
+            name: Mess detector
+            script:
+              - make md
+        - step:
+            caches:
+              - composer
+            name: Security check
+            script:
+              - make security
+        - step:
+            caches:
+              - composer
+            name: Static analysis
+            script:
+              - make stan
 
