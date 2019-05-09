@@ -1,14 +1,57 @@
 version: 2.1
 jobs:
-  check:
+  cs:
     docker:
       - image: mrjoops/simplon-cpro6-php
     steps:
       - checkout
-      - run: make check
-    working_directory: /app
+      - run: make cs
+  md:
+    docker:
+      - image: mrjoops/simplon-cpro6-php
+    steps:
+      - checkout
+      - run: make md
+  sec:
+    docker:
+      - image: mrjoops/simplon-cpro6-php
+    steps:
+      - checkout
+      - run: make security
+  stan:
+    docker:
+      - image: mrjoops/simplon-cpro6-php
+    steps:
+      - checkout
+      - run: make stan
+  vendor:
+    docker:
+      - image: mrjoops/simplon-cpro6-php
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: make vendor
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - $HOME/.composer/cache/files
 workflows:
   version: 2
   check:
     jobs:
-      - check
+      - vendor
+      - cs:
+          requires:
+            - vendor
+      - md:
+          requires:
+            - vendor
+      - sec:
+          requires:
+            - vendor
+      - stan:
+          requires:
+            - vendor
