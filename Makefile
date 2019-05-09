@@ -5,6 +5,10 @@ check: cs md security stan
 cs: vendor
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --using-cache=no -vvv src/
 
+.PHONY: fix
+fix: vendor
+	./vendor/bin/php-cs-fixer fix --allow-risky=yes -vvv src/
+
 .PHONY: md
 md: vendor
 	./vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
