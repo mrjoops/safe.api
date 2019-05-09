@@ -1,5 +1,5 @@
 .PHONY: check
-check: cs md stan
+check: cs md security stan
 
 .PHONY: cs
 cs: vendor
