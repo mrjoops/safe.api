@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  check:
+    docker:
+      - image: mrjoops/simplon-cpro6-php
+    steps:
+      - checkout
+      - run: make check
+    working_directory: /app
+workflows:
+  version: 2
+  check:
+    jobs:
+      - check
