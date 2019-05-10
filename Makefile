@@ -9,6 +9,11 @@ cs: vendor
 fix: vendor
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes -vvv src/
 
+.PHONY: install
+install: vendor
+	./bin/console doctrine:database:create --if-not-exists
+	./bin/console doctrine:migrations:migrate --no-interaction
+
 .PHONY: md
 md: vendor
 	./vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
