@@ -1,11 +1,11 @@
-FROM php:apache
+FROM mrjoops/simplon-cpro6-php
 
-RUN apt-get update \
- && apt-get install -y libpq-dev libzip-dev unzip \
- && docker-php-ext-install pdo_pgsql zip \
- && printf "\n" | pecl install apcu \
- && docker-php-ext-enable apcu
+ADD . .
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ports.conf /etc/apache2/ports.conf
 
-WORKDIR /app
+ENV APP_ENV prod
+ENV PORT 80
+
+RUN composer install -no --no-dev

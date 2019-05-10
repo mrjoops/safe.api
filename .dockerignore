@@ -1,0 +1,12 @@
+.circleci
+.git
+.gitignore
+.gitlab-ci.yml
+.php_cs.*
+.web-server.pid
+bitbucket-pipelines.yml
+docker-compose.yml
+var/cache
+var/log
+vendor
+Procfile

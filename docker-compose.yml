@@ -5,11 +5,11 @@ services:
       POSTGRES_PASSWORD: drowssap
     image: postgres
   web1:
-    build: .
     depends_on:
       - pg1
     environment:
       DATABASE_URL: pgsql://postgres:drowssap@pg1:5432/safe
+    image: mrjoops/simplon-cpro6-php
     volumes:
       - .:/app
-      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
