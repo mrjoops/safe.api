@@ -1,5 +1,6 @@
 before_script:
   - phpenv config-rm xdebug.ini
+  - printf "\n" | pecl install -f apcu
 cache:
   directories:
     - $HOME/.composer/cache/files
